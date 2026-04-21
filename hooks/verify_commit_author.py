@@ -10,6 +10,7 @@ Usage
 >>> python verify-committer.py --domain monashmotorsport.com --check-name
 """
 
+import os
 import re
 import argparse
 import subprocess
@@ -17,16 +18,16 @@ import subprocess
 from typing import Tuple
 
 
+def is_github_actions() -> bool:
+    # GitHub sets this environment variable to "true" during CI runs
+    return os.getenv("GITHUB_ACTIONS") == "true"
+
+
 def get_git_user_info() -> Tuple[str, str]:
     """Get the git user name and email from the local git config."""
-    try:
-        name = subprocess.check_output(["git", "config", "user.name"]).decode().strip()
-        email = (
-            subprocess.check_output(["git", "config", "user.email"]).decode().strip()
-        )
-        return name, email
-    except subprocess.CalledProcessError:
-        return "", ""
+    name = subprocess.check_output(["git", "config", "user.name"]).decode().strip()
+    email = subprocess.check_output(["git", "config", "user.email"]).decode().strip()
+    return name, email
 
 
 def is_valid_email(email: str, domain: str) -> bool:
@@ -59,11 +60,10 @@ def main():
     )
     args = parser.parse_args()
 
-    name, email = get_git_user_info()
-
-    if email == "" and name == "":
-        # Skip checks if running from CI without git user configured
+    if is_github_actions():
         return 0
+
+    name, email = get_git_user_info()
 
     exit_code = 0
 

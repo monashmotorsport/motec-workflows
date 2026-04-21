@@ -25,11 +25,15 @@ CATEGORIES = [
     "config",
 ]
 
+import os
 import re
 import argparse
 import subprocess
 
-from verify_commit_author import get_git_user_info
+
+def is_github_actions() -> bool:
+    # GitHub sets this environment variable to "true" during CI runs
+    return os.getenv("GITHUB_ACTIONS") == "true"
 
 
 def get_current_branch() -> str:
@@ -87,10 +91,7 @@ def main():
     )
     args = parser.parse_args()
 
-    name, email = get_git_user_info()
-
-    if email == "" and name == "":
-        # Skip checks if running from CI without git user configured
+    if is_github_actions():
         return 0
 
     branch_name = get_current_branch()
