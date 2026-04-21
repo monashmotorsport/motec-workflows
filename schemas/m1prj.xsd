@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="unqualified"
+           attributeFormDefault="unqualified">
+
+  <!-- Schema for MoTeC M1 .m1prj Project files -->
+
+  <!-- Root -->
+  <xs:element name="MoTeCM1BuildSession">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Project" type="ProjectType"/>
+      </xs:sequence>
+      <xs:attribute name="Locale" type="xs:string" use="optional"/>
+      <xs:attribute name="DefaultLocale" type="xs:string" use="optional"/>
+      <xs:attribute name="ProductName" type="xs:string" use="optional"/>
+      <xs:attribute name="ProductVersion" type="xs:string" use="optional"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="ProjectType">
+    <xs:all>
+      <xs:element name="System" type="SystemType" minOccurs="0"/>
+      <xs:element name="SelectedModuleSets" type="SelectedModuleSetsType" minOccurs="0"/>
+      <xs:element name="DataTypes" type="DataTypesType" minOccurs="0"/>
+      <xs:element name="PkgUpgrades" type="PkgUpgradesType" minOccurs="0"/>
+      <xs:element name="Build" type="BuildType" minOccurs="0"/>
+      <xs:element name="ComponentStream" type="ComponentStreamType" minOccurs="0"/>
+      <xs:element name="Organisation" type="OrganisationType" minOccurs="0"/>
+      <xs:element name="SecurityMgr" type="SecurityMgrType" minOccurs="0"/>
+      <xs:element name="Users" type="UsersType" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="FileFormat" type="xs:integer" use="optional"/>
+    <xs:attribute name="Name" type="xs:string" use="optional"/>
+    <xs:attribute name="VersionMajor" type="xs:integer" use="optional"/>
+    <xs:attribute name="VersionMinor" type="xs:integer" use="optional"/>
+    <xs:attribute name="BuildNumber" type="xs:integer" use="optional"/>
+    <xs:attribute name="Author" type="xs:string" use="optional"/>
+    <xs:attribute name="Company" type="xs:string" use="optional"/>
+    <xs:attribute name="ContactNo" type="xs:string" use="optional"/>
+    <xs:attribute name="Address" type="xs:string" use="optional"/>
+    <xs:attribute name="Email" type="xs:string" use="optional"/>
+    <xs:attribute name="SupportURL" type="xs:string" use="optional"/>
+    <xs:attribute name="Copyright" type="xs:string" use="optional"/>
+    <xs:attribute name="TargetHardware" type="xs:string" use="optional"/>
+    <xs:attribute name="SecurityLevel" type="xs:string" use="optional"/>
+    <xs:attribute name="DiagnosticLoggingCondition" type="xs:string" use="optional"/>
+    <xs:attribute name="MinimumDataLogging" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="SystemType">
+    <xs:attribute name="VersionMajor" type="xs:integer" use="optional"/>
+    <xs:attribute name="VersionMinor" type="xs:integer" use="optional"/>
+    <xs:attribute name="VersionRelease" type="xs:integer" use="optional"/>
+    <xs:attribute name="VersionBuild" type="xs:integer" use="optional"/>
+    <xs:attribute name="SelectedRelease" type="xs:integer" use="optional"/>
+    <xs:attribute name="SelectedBuild" type="xs:integer" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="SelectedModuleSetsType">
+    <xs:sequence>
+      <xs:element name="File" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="Name" type="xs:string" use="required"/>
+          <xs:attribute name="VersionMajor" type="xs:integer" use="optional"/>
+          <xs:attribute name="VersionMinor" type="xs:integer" use="optional"/>
+          <xs:attribute name="VersionBuild" type="xs:integer" use="optional"/>
+          <xs:attribute name="BuildNumber" type="xs:integer" use="optional"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- DataTypes -->
+  <xs:complexType name="DataTypesType">
+    <xs:sequence>
+      <xs:element name="Type" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Enum" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Help" type="HelpType" minOccurs="0"/>
+                </xs:sequence>
+                <xs:attribute name="Name" type="xs:string" use="required"/>
+                <xs:attribute name="ContainerOrder" type="xs:integer" use="optional"/>
+                <xs:attribute name="Tags" type="xs:string" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="Name" type="xs:string" use="required"/>
+          <xs:attribute name="Storage" type="xs:string" use="optional"/>
+          <xs:attribute name="Default" type="xs:string" use="optional"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="HelpType" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PkgUpgradesType">
+    <xs:sequence>
+      <xs:element name="Project" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="Name" type="xs:string" use="optional"/>
+          <xs:attribute name="Version" type="xs:string" use="optional"/>
+          <xs:attribute name="Major" type="xs:integer" use="optional"/>
+          <xs:attribute name="Minor" type="xs:integer" use="optional"/>
+          <xs:attribute name="Build" type="xs:integer" use="optional"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="BuildType">
+    <xs:attribute name="PackageSignKey" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <!-- Reusable Component type -->
+  <xs:complexType name="ComponentType" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="Classname" type="xs:string" use="optional"/>
+    <xs:attribute name="Name" type="xs:string" use="optional"/>
+    <xs:attribute name="Filename" type="xs:string" use="optional"/>
+    <xs:anyAttribute processContents="lax"/>
+  </xs:complexType>
+
+  <!-- Component stream: allow flexible nested components -->
+  <xs:complexType name="ComponentStreamType">
+    <xs:sequence>
+      <xs:element name="List" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Component" type="ComponentType" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Organisation" type="OrganisationType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Organisation: strict-ish - contains Component elements like ComponentStream -->
+  <xs:complexType name="OrganisationType">
+    <xs:sequence>
+      <xs:element name="Component" type="ComponentType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Security manager: strict roles -->
+  <xs:complexType name="SecurityMgrType">
+    <xs:sequence>
+      <xs:element name="SecurityRoles" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="SecurityRole" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:attribute name="Name" type="xs:string" use="required"/>
+                <xs:anyAttribute processContents="lax"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:anyAttribute processContents="lax"/>
+  </xs:complexType>
+
+  <!-- Users section: stricter model -->
+  <xs:complexType name="PermissionType">
+    <xs:attribute name="Flags" type="xs:integer" use="required"/>
+    <xs:attribute name="Index" type="xs:integer" use="optional"/>
+    <xs:anyAttribute processContents="lax"/>
+  </xs:complexType>
+
+  <xs:complexType name="PermissionsType">
+    <xs:sequence>
+      <xs:element name="LogData" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Permission" type="PermissionType" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ManageUsers" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="Flags" type="xs:integer" use="required"/>
+          <xs:anyAttribute processContents="lax"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Kernel" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="Flags" type="xs:integer" use="required"/>
+          <xs:anyAttribute processContents="lax"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Firmware" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="Flags" type="xs:integer" use="required"/>
+          <xs:anyAttribute processContents="lax"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Enables" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="Flags" type="xs:integer" use="required"/>
+          <xs:anyAttribute processContents="lax"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Login" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="Flags" type="xs:integer" use="required"/>
+          <xs:anyAttribute processContents="lax"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Clone" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="Flags" type="xs:integer" use="required"/>
+          <xs:anyAttribute processContents="lax"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="EditPassword" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="Flags" type="xs:integer" use="required"/>
+          <xs:anyAttribute processContents="lax"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="EditWorkbooks" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="Flags" type="xs:integer" use="required"/>
+          <xs:anyAttribute processContents="lax"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="EditECUName" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="Flags" type="xs:integer" use="required"/>
+          <xs:anyAttribute processContents="lax"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LogErase" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Permission" type="PermissionType" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LogSetup" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Permission" type="PermissionType" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UserRolesType">
+    <xs:sequence>
+      <xs:element name="UserRole" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="Name" type="xs:string" use="required"/>
+          <xs:attribute name="AccessType" type="xs:integer" use="optional"/>
+          <xs:anyAttribute processContents="lax"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AuthAnonymousType">
+    <xs:attribute name="Id" type="xs:string" use="required"/>
+    <xs:anyAttribute processContents="lax"/>
+  </xs:complexType>
+
+  <xs:complexType name="UserType">
+    <xs:sequence>
+      <xs:element name="Permissions" type="PermissionsType" minOccurs="0"/>
+      <xs:element name="UserRoles" type="UserRolesType" minOccurs="0"/>
+      <xs:element name="AuthAnonymous" type="AuthAnonymousType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:string" use="required"/>
+    <xs:anyAttribute processContents="lax"/>
+  </xs:complexType>
+
+  <xs:complexType name="UsersType">
+    <xs:sequence>
+      <xs:element name="User" type="UserType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
