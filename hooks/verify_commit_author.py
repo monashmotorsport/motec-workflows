@@ -19,9 +19,14 @@ from typing import Tuple
 
 def get_git_user_info() -> Tuple[str, str]:
     """Get the git user name and email from the local git config."""
-    name = subprocess.check_output(["git", "config", "user.name"]).decode().strip()
-    email = subprocess.check_output(["git", "config", "user.email"]).decode().strip()
-    return name, email
+    try:
+        name = subprocess.check_output(["git", "config", "user.name"]).decode().strip()
+        email = (
+            subprocess.check_output(["git", "config", "user.email"]).decode().strip()
+        )
+        return name, email
+    except subprocess.CalledProcessError:
+        return "", ""
 
 
 def is_valid_email(email: str, domain: str) -> bool:
