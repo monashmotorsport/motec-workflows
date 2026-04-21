@@ -15,6 +15,7 @@ Requirements
 
 import os
 import sys
+import glob
 import argparse
 
 # Set python path to include the action directory for imports
@@ -64,9 +65,7 @@ def check_comment_tag(path: str) -> int:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Validate MoTeC .m1prj files")
     parser.add_argument(
-        "paths",
-        nargs="+",
-        help="Path or glob pattern for .m1prj files to validate",
+        "path", help="Path or glob pattern for .m1prj files to validate"
     )
     args = parser.parse_args()
 
@@ -75,7 +74,7 @@ if __name__ == "__main__":
     schema = load_schema(schema_path)
     exit_code = 0
 
-    for path in args.paths:
+    for path in glob.glob(args.path):
         exit_code |= validate(path, schema)
 
         # Check for self-closing tags, if version is earlier than 1.5
