@@ -40,7 +40,7 @@ Converts all tabs in specified files to spaces. By default, it will convert all 
 ```yaml
 repos:
   - repo: https://github.com/monashmotorsport/workflows
-    rev: v0.0.1
+    rev: v0.0.2
     hooks:
       - id: convert-tabs-to-spaces
         files: \.m1scr$
@@ -54,7 +54,7 @@ Checks that the author of a commit has an email address that matches the configu
 ```yaml
 repos:
   - repo: https://github.com/monashmotorsport/workflows
-    rev: v0.0.1
+    rev: v0.0.2
     hooks:
       - id: verify-commit-author
         args: [--domain=monashmotorsport.com, --check-name]
@@ -67,7 +67,7 @@ Verifies that the branch name of a commit matches the `<category>/<description>`
 ```yaml
 repos:
   - repo: https://github.com/monashmotorsport/workflows
-    rev: v0.0.1
+    rev: v0.0.2
     hooks:
       - id: verify-branch-name
         args: [
