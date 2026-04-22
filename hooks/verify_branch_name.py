@@ -83,7 +83,7 @@ def main():
         "dev hotfix config)",
     )
     parser.add_argument(
-        "--special",
+        "--allowed-branches",
         nargs="+",
         default=SPECIAL,
         help="List of special branch names that are always allowed (default: main "
